@@ -14,7 +14,7 @@ library('tidyverse');library('modeldata')
 
 This R markdown domcument demostrates my abilites to use models for data analysis using a data set collected on crickets.
 
-```{r load data, include = false}
+```{r load data, include = FALSE}
 data(crickets, package = "modeldata")
 names(crickets)
 ```
@@ -23,6 +23,10 @@ names(crickets)
 
 In this report, we examine what factors predict a cricket's chirp rate
 
-```{r summary, echo = false}
+```{r summary, echo = FALSE}
 summary(crickets)
+ggplot(crickets , aes(x = rate)) + 
+  geom_histogram(bins = 8) +
+  ggtitle("Distribution of the chirp rate of crickets") +
+  xlab('Chirp rate (per min.)')
 ```
