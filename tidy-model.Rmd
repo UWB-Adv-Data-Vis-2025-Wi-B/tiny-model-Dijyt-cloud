@@ -1,0 +1,92 @@
+---
+title: "tidy-model"
+author: "Daniel Teoh"
+date: "2025-02-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library('tidyverse');library('modeldata')
+```
+
+## Introduction
+
+This R markdown domcument demostrates my abilites to use models for data analysis using a data set collected on crickets.
+
+```{r load data, include = FALSE}
+data(crickets, package = "modeldata")
+names(crickets)
+```
+
+## What is that sound?
+
+In this report, we examine what factors predict a cricket's chirp rate
+
+```{r summary, echo = FALSE}
+summary(crickets)
+ggplot(crickets , aes(x = rate)) + 
+  geom_histogram(bins = 8) +
+  ggtitle("Distribution of the chirp rate of crickets") +
+  xlab('Chirp rate (per min.)')
+```
+
+## Tempreature affects chrip rate
+```{r temp, echo = FALSE}
+ggplot(crickets, aes(x = temp, y = rate)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of temperature and chirp rate") +
+  ylab('Chirp rate (per min.)') +
+  xlab('Temperature (Celsius)')
+
+temp_lm <- lm(rate ~ temp, crickets)
+
+summary.lm(temp_lm)
+```
+When looking at  the scatter plot of the temperature and chirping correlation
+test we can see that the average chirp rate per minute increases at a rate of 
+4.2 per minute as the temperature increases 1 degree.
+
+## Species-specific effect of tempreature on chirpping
+```{r species, echo = FALSE}
+ggplot(crickets, aes(x = temp, y = rate, color = species)) + 
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle ("Plot of temperature and chirp rate for two species of crickets") +
+  ylab('Chrip rate (per min.)') +
+  xlab('Temperature (Celsius)')
+
+species_lm <- lm(rate ~ temp + species, crickets)
+
+summary.lm(species_lm)
+```
+When looking at the scatter plot of the temperature and chirping correlation 
+test, we can see that the average chirp rate per minute increases at a rate of 
+4.2 per minute as the temperature rises by 1 degree. Additionally, the trend 
+lines for the two cricket species indicate a strong positive correlation, with 
+slight variations in their responses to temperature changes. The shaded 
+confidence intervals suggest a consistent pattern, reinforcing the idea that 
+temperature significantly influences chirping behavior.
+
+## Interactions 
+```{r species histogram, echo = FALSE}
+ggplot(crickets, aes (x = rate, fill = species)) + 
+  geom_histogram(postion = 'identity', alpha = 0.7, bins = 8) +
+  ggtitle("Distribution of the chirp rate of crickets") +
+  xlab('Chirp rate (per min.)')
+
+```
+
+```{r interactions, echo = FALSE}
+ggplot(crickets, aes(x = temp, y = rate, color = species)) + 
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle ("Plot of temperature and chirp rate for two species of crickets") +
+  ylab('Chrip rate (per min.)') +
+  xlab('Temperature (Celsius)')
+
+species_x_temp_lm <- lm(rate ~ temp + species + temp:species, crickets)
+summary.lm(species_x_temp_lm)
+
+anova(species_lm, species_x_temp_lm)
