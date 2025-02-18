@@ -20,3 +20,17 @@ This R Markdown document demonstrates my ability to build linear models for data
 data(diamonds, package = "ggplot2")
 names(diamonds)
 ```
+
+##Distribution of Diamond Prices
+
+In this section we examine the distribution of diamond prices.
+
+```{r summary, echo = FALSE}
+summary(diamonds$price)
+ggplot(diamonds, aes(x = price)) + 
+  geom_histogram(bins = 50, fill = "steelblue", color = "black") +
+  ggtitle("Distribution of Diamond Prices") +
+  xlab("Price (USD)") +
+  ylab("Count")
+
+```
