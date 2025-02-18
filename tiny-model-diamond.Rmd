@@ -34,3 +34,42 @@ ggplot(diamonds, aes(x = price)) +
   ylab("Count")
 
 ```
+
+##Carat Weight and Price Relationship
+
+```{r weight , echo = FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", color = "red") +
+  ggtitle("Carat Weight vs. Price") +
+  xlab("Carat") +
+  ylab("Price (USD)")
+
+carat_lm <- lm(price ~ carat, data = diamonds)
+summary.lm(carat_lm)
+
+```
+
+When looking at the scatter plot of carat weight and price, we can see that the price increases as carat weight increases. The fitted linear model suggests a strong positive correlation between carat and price.
+
+##Multi-Variable Linear Model for Price Prediction
+```{r variable, echo = FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", color = "red") +
+  ggtitle("Carat Weight vs. Price") +
+  xlab("Carat") +
+  ylab("Price (USD)")
+
+multi_lm <- lm(price ~ carat + cut + color + clarity, data = diamonds)
+summary.lm(multi_lm)
+```
+
+##Interaction
+```{r variable histogram echo = FALSE}
+ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +
+  geom_boxplot() +
+  ggtitle("Effect of Diamond Cut on Price") +
+  xlab("Cut") +
+  ylab("Price (USD)")
+```
