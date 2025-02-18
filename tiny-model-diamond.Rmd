@@ -1,0 +1,18 @@
+---
+title: "tidy-model-diamonds"
+author: "Daniel Teoh"
+date: "2025-02-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+data(diamonds, package = "ggplot2")
+names(diamonds)
+
+```
+
+##Introdution 
+
+This R Markdown document demonstrates my ability to build linear models for data analysis using the diamonds dataset from the ggplot2 package. The goal is to predict a diamond's price based on its characteristics.
