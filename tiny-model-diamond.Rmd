@@ -8,10 +8,15 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library('tidyverse') ; library('modeldata')
+library('tidyverse') ; library('ggplot2')
 
 ```
 
 ##Introdution 
 
 This R Markdown document demonstrates my ability to build linear models for data analysis using the diamonds dataset from the ggplot2 package. The goal is to predict a diamond's price based on its characteristics.
+
+```{r load data, include = FALSE}
+data(diamonds, package = "ggplot2")
+names(diamonds)
+```
