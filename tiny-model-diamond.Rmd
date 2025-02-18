@@ -64,12 +64,27 @@ ggplot(diamonds, aes(x = carat, y = price)) +
 multi_lm <- lm(price ~ carat + cut + color + clarity, data = diamonds)
 summary.lm(multi_lm)
 ```
+The scatter plot shows a strong positive correlation between carat weight and price, with larger diamonds generally costing more. The red regression line confirms this trend, though the spread suggests other factors also influence price. To account for this, we fit a multi-variable model including cut, color, and clarity, which helps refine price predictions by incorporating these quality attributes. 
 
 ##Interaction
-```{r variable histogram echo = FALSE}
+```{r variable histogram, echo = FALSE}
 ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +
   geom_boxplot() +
   ggtitle("Effect of Diamond Cut on Price") +
   xlab("Cut") +
   ylab("Price (USD)")
+```
+```{r interation, echo = FALSE}
+ggplot(diamonds, aes(x = carat, y = price, color = cut)) + 
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm") +
+  ggtitle("Carat Weight vs. Price Across Different Cuts") +
+  xlab("Carat") +
+  ylab("Price (USD)")
+
+interaction_lm <- lm(price ~ carat * cut, data = diamonds)
+summary.lm(interaction_lm)
+
+anova(multi_lm, interaction_lm)
+
 ```
